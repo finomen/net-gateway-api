@@ -1,0 +1,24 @@
+name: Publish
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.x'
+
+      - uses: ko-build/setup-ko@v0.8
+      - name: controller
+        working-directory: cmd/controller
+        run: ko build
+      - name: webhook
+        working-directory: cmd/webhook
+        run: ko build 
+
