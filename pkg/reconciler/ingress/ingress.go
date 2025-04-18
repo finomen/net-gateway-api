@@ -152,12 +152,14 @@ func (c *Reconciler) reconcileIngress(ctx context.Context, ing *v1alpha1.Ingress
 				// return no error, since there is no point in retrying
 				return nil
 			}
+			fmt.Printf("Load balancer not ready: %v\n", err)
 			ing.Status.MarkLoadBalancerNotReady()
 			return err
 		}
 
 		ing.Status.MarkLoadBalancerReady(externalLBs, internalLBs)
 	} else {
+		fmt.Printf("Load balancer not ready because routes not ready")
 		ing.Status.MarkLoadBalancerNotReady()
 	}
 
