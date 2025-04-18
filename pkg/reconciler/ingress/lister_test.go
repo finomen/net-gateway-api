@@ -71,7 +71,7 @@ func TestBackendsToProbeTargets(t *testing.T) {
 				PodIPs:  sets.New("1.2.3.4"),
 				PodPort: "8080",
 				URLs: []*url.URL{{
-					Scheme: "http",
+					Scheme: "https",
 					Host:   "example.com",
 					Path:   "/",
 				}},
@@ -209,11 +209,11 @@ func TestBackendsToProbeTargets(t *testing.T) {
 			PodIPs:  sets.New("2.3.4.6"),
 			PodPort: "1230",
 			URLs: []*url.URL{{
-				Scheme: "http",
+				Scheme: "https",
 				Host:   "example.com",
 				Path:   "/",
 			}, {
-				Scheme: "http",
+				Scheme: "https",
 				Host:   "example.com",
 				Path:   "/.well-known/knative",
 			}},
@@ -221,11 +221,11 @@ func TestBackendsToProbeTargets(t *testing.T) {
 			PodIPs:  sets.New("3.4.5.7", "4.3.2.0"),
 			PodPort: "4320",
 			URLs: []*url.URL{{
-				Scheme: "http",
+				Scheme: "https",
 				Host:   "example.com",
 				Path:   "/",
 			}, {
-				Scheme: "http",
+				Scheme: "https",
 				Host:   "example.com",
 				Path:   "/.well-known/knative",
 			}},
