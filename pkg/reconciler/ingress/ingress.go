@@ -102,6 +102,7 @@ func (c *Reconciler) reconcileIngress(ctx context.Context, ing *v1alpha1.Ingress
 
 	routesReady := true
 
+	fmt.Printf("Reconcile rules\n")
 	for _, rule := range ing.Spec.Rules {
 		httproute, probeTargets, err := c.reconcileHTTPRoute(ctx, ingressHash, ing, &rule)
 		if err != nil {
@@ -134,6 +135,7 @@ func (c *Reconciler) reconcileIngress(ctx context.Context, ing *v1alpha1.Ingress
 	}
 
 	if len(listeners) > 0 {
+		fmt.Printf("Reconcile listeners\n")
 		// For now, we only reconcile the external visibility, because there's
 		// no way to provide TLS for internal listeners.
 		err := c.reconcileGatewayListeners(
@@ -144,10 +146,12 @@ func (c *Reconciler) reconcileIngress(ctx context.Context, ing *v1alpha1.Ingress
 	}
 
 	// TODO: check Gateway readiness before reporting Ingress ready
+	fmt.Printf("Routes ready: %v\n", routesReady)
 	if routesReady {
 		externalLBs, internalLBs, err := c.lookUpLoadBalancers(ing, pluginConfig)
 		if err != nil {
 			if ok := errors.Is(err, ErrGatewayNotFound); ok {
+				fmt.Printf("Gateway not found\n")
 				// if we can't find a Gateway, we mark it as failed, and
 				// return no error, since there is no point in retrying
 				return nil
