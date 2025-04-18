@@ -71,7 +71,8 @@ func (l *gatewayPodTargetLister) BackendsToProbeTargets(ctx context.Context, bac
 				// Istio uses "http2" for the http port
 				// Contour uses "http-80" for the http port
 				matchSchemes := sets.New("http", "http2", "http-80")
-				if visibility == v1alpha1.IngressVisibilityExternalIP && backends.HTTPOption == v1alpha1.HTTPOptionRedirected {
+				// FIXME(incorrect option): if visibility == v1alpha1.IngressVisibilityExternalIP* && backends.HTTPOption == v1alpha1.HTTPOptionRedirected {
+				if visibility == v1alpha1.IngressVisibilityExternalIP {
 					scheme = "https"
 					matchSchemes = sets.New("https", "https-443")
 				}
