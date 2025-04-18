@@ -18,8 +18,8 @@ jobs:
       - uses: ko-build/setup-ko@v0.8
       - name: controller
         working-directory: cmd/controller
-        run: ko build
+        run: ko build -t
       - name: webhook
         working-directory: cmd/webhook
-        run: ko build 
+        run: ko build -t ${{ github.sha }}
 
